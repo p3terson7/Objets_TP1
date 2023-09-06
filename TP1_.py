@@ -23,6 +23,11 @@ class MotMystere:
 
         essais = 1
         while GAME_OVER == False:
+            if essais > MotMystere.NOMBRE_ESSAIS:
+                print("Vous avez perdu! Le mot que vous cherchiez était:", mot, "\n")
+                GAME_OVER = True
+                break
+            print("Mot mystère:", mot)
             print("Essai", essais, "/", MotMystere.NOMBRE_ESSAIS)
             mot_essai = input("Entrez motEssai: ")
             lettres_essai = [mot_essai[i] for i in range(len(mot_essai))]
