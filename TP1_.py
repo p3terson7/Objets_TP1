@@ -27,10 +27,15 @@ class MotMystere:
                 print("Vous avez perdu! Le mot que vous cherchiez était:", mot, "\n")
                 GAME_OVER = True
                 break
+
             print("Mot mystère:", mot)
             print("Essai", essais, "/", MotMystere.NOMBRE_ESSAIS)
             mot_essai = input("Entrez motEssai: ")
+            if len(mot_essai) != len(mot):
+                print("Le mot doit avoir", len(mot), "lettres!\n")
+                continue
             lettres_essai = [mot_essai[i] for i in range(len(mot_essai))]
+
             lettres_trouvees = []
             lettres_indices = []
 
