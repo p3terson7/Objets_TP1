@@ -53,21 +53,11 @@ class MotMystere:
                     lettres_indices.append("✘")
             for i in range(len(lettres_indices)):
                 if lettres_indices[i] == "+":
-                    if lettres_essai.count(lettres_essai[i]) >= lettres_mot.count(
-                        lettres_essai[i]
-                    ):
-                        compteur_memes_lettres = lettres_essai.count(lettres_essai[i])
-                        print(
-                            compteur_memes_lettres,
-                            lettres_essai[i],
-                            lettres_mot.count(lettres_essai[i]),
-                        )
-                        while compteur_memes_lettres >= lettres_mot.count(
-                            lettres_essai[i]
-                        ):
-                            lettres_indices[i] = "✘"
-                            lettres_essai[lettres_essai.index(lettres_essai[i])] = " "
-                            compteur_memes_lettres -= 1
+                    compteur_memes_lettres = lettres_essai.count(lettres_essai[i])
+                    while compteur_memes_lettres > lettres_mot.count(lettres_essai[i]):
+                        lettres_indices[i] = "✘"
+                        lettres_essai[i] = " "
+                        compteur_memes_lettres -= 1
             print(lettres_indices)
             essais += 1
 
