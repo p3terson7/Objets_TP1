@@ -1,20 +1,19 @@
 import random
+import nltk
 
 
 class MotMystere:
+    # nltk.download("punkt")
+    fichier = open(
+        "C:/Users/psara/OneDrive/Bureau/school/session7/objets/TP1_OBJETS/Objets_TP1/bovary.txt",
+        encoding="utf-8",
+    )
+    bovary_string = fichier.read()
+    bovary_liste = nltk.word_tokenize(bovary_string)
+
+    DICTIONNAIRE = sorted(set([mot for mot in bovary_liste if len(mot) == 5]))
+
     NOMBRE_ESSAIS = 6
-    DICTIONNAIRE = [
-        "kiefs",
-        "adire",
-        "niche",
-        "allee",
-        "balle",
-        "brise",
-        "chien",
-        "chiot",
-        "aller",
-        "finir",
-    ]
 
     def __init__(self):
         self.GAME_OVER = False
