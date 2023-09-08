@@ -34,6 +34,7 @@ class HangmanGame:
         self.lettres_indices = ["", "", "", "", ""]
 
     def jouer(self):
+        niveau = input("Quel niveau de jeu ? (1 ou 2) ")
         while not self.GAME_OVER:
             if self.nbEssais == 0:
                 print(
@@ -64,13 +65,20 @@ class HangmanGame:
                 continue
 
             # Pour chaque essai réussi
-            if lettre_essai in self.lettres_restantes:
+            if lettre_essai in self.lettres_restantes and niveau == "2":
                 self.lettres_indices[
                     self.lettres_restantes.index(lettre_essai)
                 ] = lettre_essai
                 # self.lettres_restantes.remove(lettre_essai)
                 self.lettres_restantes[self.lettres_restantes.index(lettre_essai)] = ""
                 print("Lettres trouvées:", self.lettres_indices, "\n")
+
+            if lettre_essai in self.lettres_restantes and niveau == "1":
+                for i in range(len(self.lettres_restantes)):
+                    if self.lettres_restantes[i] == lettre_essai:
+                        self.lettres_indices[i] = lettre_essai
+                        self.lettres_restantes[i] = ""
+                        print("Lettres trouvées:", self.lettres_indices, "\n")
 
             # Pour chaque essai raté
             else:
