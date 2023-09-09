@@ -5,7 +5,7 @@ import nltk
 
 
 fichier = open(
-    "C:/Users/psara/OneDrive/Bureau/school/session7/objets/TP1_OBJETS/Objets_TP1/bovary.txt",
+    "bovary.txt",
     encoding="utf-8",
 )
 bovary_string = fichier.read()
@@ -16,15 +16,18 @@ DICTIONNAIRE = sorted(set([mot for mot in bovary_liste if len(mot) == 5]))
 
 # Setup turtle
 tortue = Turtle()
-turtle.hideturtle()
-tortue.speed(3)
-tortue.pensize(3)
-tortue.penup()
-tortue.color("black")
-tortue.goto(-50, -50)  # Position initiale
+
+def resetTortue():
+    turtle.hideturtle()
+    tortue.speed(3)
+    tortue.pensize(3)
+    tortue.penup()
+    tortue.color("black")
+    tortue.goto(-50, -50)  # Position initiale
 
 
 class HangmanGame:
+    xPosLettres = -100
     def __init__(self):
         self.nbEssais = 6
         self.GAME_OVER = False
@@ -32,6 +35,19 @@ class HangmanGame:
         self.lettres_mot_mystere = list(self.mot_mystere)
         self.lettres_restantes = self.lettres_mot_mystere
         self.lettres_indices = ["", "", "", "", ""]
+
+    def afficheLettres(self):
+        for i in range(len(self.lettres_mot_mystere)):
+            tortue.goto(self.xPosLettres + 50 * i, -200)
+            tortue.pendown()
+            tortue.forward(25)
+            tortue.penup()
+
+    def afficheLettre(self, lettre):
+        tortue.goto(self.xPosLettres + 53 * self.lettres_mot_mystere.index(lettre), -199)
+        tortue.pendown()
+        tortue.write(lettre, font=("Arial", 25, "normal"))
+        tortue.penup()
 
     def jouer(self):
         niveau = input("Quel niveau de jeu ? (1 ou 2) ")
@@ -50,8 +66,9 @@ class HangmanGame:
                 print("Vous avez gagné!")
                 self.GAME_OVER = True
                 break
-            print(self.lettres_indices)
 
+            print(self.lettres_indices)
+            print("Nombre d'essais: " + str(self.nbEssais))
             print("Mot mystère:", self.mot_mystere)
             print(self.lettres_restantes)
             lettre_essai = input("Votre lettre: ").lower()
@@ -69,14 +86,16 @@ class HangmanGame:
                 self.lettres_indices[
                     self.lettres_restantes.index(lettre_essai)
                 ] = lettre_essai
+                self.afficheLettre(lettre_essai)
                 # self.lettres_restantes.remove(lettre_essai)
                 self.lettres_restantes[self.lettres_restantes.index(lettre_essai)] = ""
                 print("Lettres trouvées:", self.lettres_indices, "\n")
 
-            if lettre_essai in self.lettres_restantes and niveau == "1":
+            elif lettre_essai in self.lettres_restantes and niveau == "1":
                 for i in range(len(self.lettres_restantes)):
                     if self.lettres_restantes[i] == lettre_essai:
                         self.lettres_indices[i] = lettre_essai
+                        self.afficheLettre(lettre_essai)
                         self.lettres_restantes[i] = ""
                         print("Lettres trouvées:", self.lettres_indices, "\n")
 
@@ -88,7 +107,7 @@ class HangmanGame:
     def dessineBase(self):
         tortue.pendown()
         tortue.begin_fill()
-        for _ in range(4):
+        for i in range(4):
             tortue.forward(80)
             tortue.right(90)
         tortue.end_fill()
@@ -97,6 +116,7 @@ class HangmanGame:
         tortue.goto(100, 200)
         tortue.goto(100, 175)
         tortue.penup()
+        self.afficheLettres()
 
     def dessineTete(self):
         tortue.goto(100, 175)
@@ -157,12 +177,14 @@ class HangmanGame:
 def main():
     replay = "o"
     while replay == "o":
+        resetTortue()
         game = HangmanGame()
         game.dessineBase()
         turtle.listen()
         game.jouer()
         replay = input("Voulez-vous rejouer ? (o/n) ").lower()
         tortue.reset()
+
     turtle.exitonclick()
 
 
