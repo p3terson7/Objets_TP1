@@ -5,7 +5,7 @@ import nltk
 class MotMystere:
     # nltk.download("punkt")
     fichier = open(
-        "C:/Users/psara/OneDrive/Bureau/school/session7/objets/TP1_OBJETS/Objets_TP1/bovary.txt",
+        "bovary.txt",
         encoding="utf-8",
     )
     bovary_string = fichier.read()
@@ -15,6 +15,7 @@ class MotMystere:
 
     NOMBRE_ESSAIS = 6
 
+    # Initialisation des variables
     def __init__(self):
         self.GAME_OVER = False
         self.mot = random.choice(self.DICTIONNAIRE).lower()
@@ -23,6 +24,7 @@ class MotMystere:
 
     def jouer(self):
         while not self.GAME_OVER:
+            # Si le joueur a dépassé le nombre d'essais, il a perdu
             if self.essais > self.NOMBRE_ESSAIS:
                 print(
                     "Vous avez perdu! Le mot que vous cherchiez était:", self.mot, "\n"
@@ -44,12 +46,14 @@ class MotMystere:
 
             lettres_essai = list(mot_essai)
 
+            # Si le mot d'essai est le mot mystère, le joueur a gagné
             if mot_essai == self.mot:
                 print("Vous avez gagné!")
                 self.GAME_OVER = True
             else:
                 lettres_indices = []
 
+                # Vérifie si les lettres sont dans le mot mystère
                 for i in range(len(self.lettres_mot)):
                     if lettres_essai[i] == self.lettres_mot[i]:
                         lettres_indices.append("✔")
@@ -58,6 +62,7 @@ class MotMystere:
                     else:
                         lettres_indices.append("✘")
 
+                # On repasse sur + pour vérifier qu'il n'y a pas de doublons
                 for i in range(len(lettres_indices)):
                     if lettres_indices[i] == "+":
                         compteur_memes_lettres = lettres_essai.count(lettres_essai[i])

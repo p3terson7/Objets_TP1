@@ -17,6 +17,7 @@ DICTIONNAIRE = sorted(set([mot for mot in bovary_liste if len(mot) == 5]))
 # Setup turtle
 tortue = Turtle()
 
+
 def resetTortue():
     turtle.hideturtle()
     tortue.speed(3)
@@ -28,6 +29,7 @@ def resetTortue():
 
 class HangmanGame:
     xPosLettres = -100
+
     def __init__(self):
         self.nbEssais = 6
         self.GAME_OVER = False
@@ -44,7 +46,9 @@ class HangmanGame:
             tortue.penup()
 
     def afficheLettre(self, lettre):
-        tortue.goto(self.xPosLettres + 53 * self.lettres_mot_mystere.index(lettre), -199)
+        tortue.goto(
+            self.xPosLettres + 53 * self.lettres_mot_mystere.index(lettre), -199
+        )
         tortue.pendown()
         tortue.write(lettre, font=("Arial", 25, "normal"))
         tortue.penup()
